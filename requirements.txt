@@ -1,5 +1,8 @@
 wheel
-
 pandas
 jupyterlab
 streamlit
+pylint
+mypy
+flake8
+autopep
