@@ -90,7 +90,7 @@ dictionary_locations = {
 
 
 dict_associated_stations = {
-    "record_type": "A",
+    "record_type": "M", #A
     "length": 27, 
     "records": {
     "update_marker": (0, 1),
