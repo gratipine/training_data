@@ -156,3 +156,52 @@ dict_route_exclusions = {
     "incl_excl": (25, 26)
     }
 }
+
+dict_ticket_types = {
+    "records": {
+        "update_marker": (0, 1),
+        "ticket_code": (1, 4),
+        "end_date": (4, 12),
+        "start_date": (12, 20),
+        "quote_date": (20, 28),
+        "description": (28, 43),
+        "tkt_class": (43, 44),
+        "tkt_type": (44, 45),
+        "tkt_group": (45, 46),
+        "last_valid_date": (46, 54),
+        "max_passengers": (54, 57),
+        "min_passengers": (57, 60),
+        "max_adults": (60, 63),
+        "min_adults": (63, 66),
+        "max_children": (66, 69),
+        "min_children": (69, 72),
+        "restricted_by_date": (72, 73),
+        "restricted_by_train": (73, 74),
+        "restricted_by_area": (74, 75),
+        "validity_code": (75, 77),
+        "atb_description": (77, 97),
+        "lul_xlondon_issue": (97, 98),
+        "fare_multiplier": (108, 111),
+        "discount_category": (111, 113)
+    }
+}
+
+dict_ticket_validity = {
+    "records": {
+        "validity_code": (0, 2),
+        "end_date": (2, 10),
+        "start_date": (10, 18),
+        "description": (18, 38),
+        "out_dates": (38, 40),
+        "out_months": (40, 42),
+        "ret_days": (42, 44),
+        "ret_months": (44, 46),
+        "ret_after_days": (46, 48),
+        "ret_after_months": (48, 50),
+        "ret_after_day": (50, 52),
+        "break_out": (52, 53),
+        "break_rtn": (53, 54),
+        "out_description": (54, 68),
+        "rtn_description": (68, 82)
+    }
+}

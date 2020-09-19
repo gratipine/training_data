@@ -1,17 +1,28 @@
 import pandas as pd
 import config.indices_of_records as dicts
 
-def create_records_table(relevant_dictionary: dict, table_with_records: pd.DataFrame, lengths_of_records: pd.Series):
-    lengths_of_record_type = relevant_dictionary.get("length")
-    
-    records_of_specified_type = table_with_records[
-        lengths_of_records == lengths_of_record_type].copy()
+def create_columns_out_of_indices(
+    relevant_dictionary: dict,
+    records_of_specified_type: pd.DataFrame):
     
     for key, pair_indices in relevant_dictionary.get("records").items():
         records_of_specified_type[key] = (
             records_of_specified_type["records"]
             .str[pair_indices[0]:pair_indices[1]]
         )
+    
+    return records_of_specified_type
+
+def create_records_table(
+    relevant_dictionary: dict, table_with_records: pd.DataFrame, lengths_of_records: pd.Series):
+    
+    lengths_of_record_type = relevant_dictionary.get("length")
+    
+    records_of_specified_type = table_with_records[
+        lengths_of_records == lengths_of_record_type].copy()
+    
+    records_of_specified_type = create_columns_out_of_indices(
+        relevant_dictionary, records_of_specified_type)
     
     records_of_specified_type = records_of_specified_type[
         records_of_specified_type["record_type"] == relevant_dictionary.get("record_type")]
@@ -116,3 +127,15 @@ def combine_fares_routes_locations(routes_with_fares_filtered, locations_records
     )
     
     return routes_fares_descriptions
+
+
+def prep_ticket_types_table(files_pattern, dictionary_types):
+    ticket_types = pd.read_table(
+        f"../data/{files_pattern}/{files_pattern}.TTY",
+        skipfooter=1, engine="python", names=["records"], header=5)
+    
+    ticket_types = create_columns_out_of_indices(
+        relevant_dictionary=dictionary_types,
+        records_of_specified_type=ticket_types)
+    
+    return ticket_types
