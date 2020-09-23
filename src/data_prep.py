@@ -129,13 +129,13 @@ def combine_fares_routes_locations(routes_with_fares_filtered, locations_records
     return routes_fares_descriptions
 
 
-def prep_ticket_types_table(files_pattern, dictionary_types):
-    ticket_types = pd.read_table(
-        f"../data/{files_pattern}/{files_pattern}.TTY",
+def prep_single_record_type_in_file_table(files_pattern, dictionary_types, file_ending):
+    data_in = pd.read_table(
+        f"../data/{files_pattern}/{files_pattern}.{file_ending}",
         skipfooter=1, engine="python", names=["records"], header=5)
     
-    ticket_types = create_columns_out_of_indices(
+    data_in = create_columns_out_of_indices(
         relevant_dictionary=dictionary_types,
-        records_of_specified_type=ticket_types)
+        records_of_specified_type=data_in)
     
-    return ticket_types
+    return data_in
