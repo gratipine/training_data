@@ -115,16 +115,19 @@ def combine_fares_and_routes(merged_data, routes_records):
 def combine_fares_routes_locations(routes_with_fares_filtered, locations_records):
     routes_fares_descriptions = routes_with_fares_filtered.merge(
     locations_records[["nlc_code", "description"]].drop_duplicates(),
-    left_on="origin_code", right_on="nlc_code"
+    left_on="origin_code", right_on="nlc_code", how="left"
     )
+    print(len(routes_fares_descriptions))
     routes_fares_descriptions.rename(columns={
     "description_x":"route_description",
     "description_y":"origin_station"}, inplace=True)
 
     routes_fares_descriptions = routes_fares_descriptions.merge(
-    locations_records[["nlc_code", "description"]].drop_duplicates(),
-    left_on="destination_code", right_on="nlc_code", suffixes=["_origin", "_destination"] 
+        locations_records[["nlc_code", "description"]].drop_duplicates(),
+        left_on="destination_code", right_on="nlc_code",
+        suffixes=["_origin", "_destination"], how="left" 
     )
+    print(len(routes_fares_descriptions))
     
     return routes_fares_descriptions
 
