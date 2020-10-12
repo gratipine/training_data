@@ -205,3 +205,11 @@ dict_ticket_validity = {
         "rtn_description": (68, 82)
     }
 }
+
+non_derivable_fares = {
+    "records":{
+        "origin_code": (1, 5),
+        "destination_code": (5, 9),
+        "route_code": (9, 14)
+    }
+}
