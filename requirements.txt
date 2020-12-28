@@ -5,6 +5,6 @@ streamlit
 pylint
 mypy
 flake8
-autopep
+autopep8
 reload
 pyarrow

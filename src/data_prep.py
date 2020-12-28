@@ -142,3 +142,24 @@ def prep_single_record_type_in_file_table(files_pattern, dictionary_types, file_
         records_of_specified_type=data_in)
     
     return data_in
+
+
+def get_line_edges(input_list):
+    print(input_list)
+    out = pd.DataFrame()
+    for element in input_list:
+        line_name = list(element.items())[1][1]
+        branches_in_both_directions = list(element.items())[2][1][0]
+        branches_in_single_direction = branches_in_both_directions[
+            list(branches_in_both_directions.items())[0][0]]
+        print(branches_in_single_direction)
+        list_of_edges = branches_in_single_direction.split("&harr;")
+        list_of_edges.append(line_name)
+        out = pd.concat([out, pd.DataFrame([list_of_edges])])
+
+    out.rename(columns={0: "line_start", 1: "line_end", 2: "line_name"}, inplace=True)
+    out.reset_index(drop=True, inplace=True)
+    out["line_start"] = out["line_start"].str.strip()
+    out["line_end"] = out["line_end"].str.strip()
+
+    return out
