@@ -27,3 +27,26 @@ stations.to_csv("..\data\stations.csv")
 # %%
 stations[stations["station_id"] == name]
 # %%
+stations[stations["station_name"].str.contains("Hasl")]
+
+# %%
+name = "910GHASLEMR"
+with open(f'../{name}.json',) as file:
+    data = json.load(file)
+# %%
+with open(f"../transport_lines.json") as file:
+    lines = json.load(file)
+# %%
+len(lines)
+# %%
+data.get("fares").keys()
+#%%
+data.get("fares").get("910GGUILDFD")
+#%%
+data.get("fares").get("910GWOKING")
+
+#%%
+stations[stations["station_name"].str.contains("Guildford")]
+#%%
+stations[stations["station_name"].str.contains("Woking")]
+# %%

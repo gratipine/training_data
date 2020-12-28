@@ -145,20 +145,54 @@ def prep_single_record_type_in_file_table(files_pattern, dictionary_types, file_
 
 
 def get_line_edges(input_list):
-    print(input_list)
     out = pd.DataFrame()
+
     for element in input_list:
         line_name = list(element.items())[1][1]
-        branches_in_both_directions = list(element.items())[2][1][0]
-        branches_in_single_direction = branches_in_both_directions[
-            list(branches_in_both_directions.items())[0][0]]
-        print(branches_in_single_direction)
-        list_of_edges = branches_in_single_direction.split("&harr;")
-        list_of_edges.append(line_name)
-        out = pd.concat([out, pd.DataFrame([list_of_edges])])
+        branches_in_both_directions = list(element.items())[2][1]
+        
+        for direction in branches_in_both_directions:
+            direction_name = direction.get("branchName").split("&harr;")
+            direction_name.append(line_name)
 
-    out.rename(columns={0: "line_start", 1: "line_end", 2: "line_name"}, inplace=True)
+            out = pd.concat([out, pd.DataFrame([direction_name])])
+
+    out.rename(
+        columns={0: "line_start", 1: "line_end", 2: "line_name"},
+        inplace=True)
     out.reset_index(drop=True, inplace=True)
+    
+    out["line_start"] = out["line_start"].str.strip()
+    out["line_end"] = out["line_end"].str.strip()
+
+    return out
+
+
+def get_stations_in_line(input_list):
+    out = pd.DataFrame()
+
+    for element in input_list:
+        line_name = list(element.items())[1][1]
+        branches_in_both_directions = list(element.items())[2][1]
+
+        for direction in branches_in_both_directions:
+            direction_name = direction.get("branchName").split("&harr;")
+            direction_name.append(line_name)
+
+            stations = pd.DataFrame(direction.get("stationIds"))
+            stations.rename(inplace=True, columns={0: "station_id"})
+            stations["merge"] = 1
+            temp = pd.DataFrame([direction_name])
+            temp["merge"] = 1
+            temp = temp.merge(stations, on="merge").drop("merge", axis=1)
+
+            out = pd.concat([out, temp])
+
+    out.rename(
+        columns={0: "line_start", 1: "line_end", 2: "line_name"},
+        inplace=True)
+    out.reset_index(drop=True, inplace=True)
+
     out["line_start"] = out["line_start"].str.strip()
     out["line_end"] = out["line_end"].str.strip()
 
