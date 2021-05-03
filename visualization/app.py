@@ -24,7 +24,7 @@ destination_station = st.sidebar.selectbox("Destination station: ", destinations
 price = data.loc[
     #(data["origin_station"] == origin_station) &
     #(data["description_ticket"] == ticket_type_required) &
-    (data["description"] == destination_station), :]
+    (data["description"] == destination_station), :] 
 
 st.dataframe(price["origin_station"].unique())
 

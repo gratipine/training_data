@@ -1,7 +1,9 @@
 .venv/
 data/
+.idea
 
 .vscode/
 *.ipynb_checkpoints*
 *__pycache__
 config/config.py
+*.json
