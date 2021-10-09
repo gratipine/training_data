@@ -19,5 +19,5 @@ jobs:
         pip install pylint
     - name: Linting and testing
       run: |
-        pylint src
         pytest
+        pylint src
